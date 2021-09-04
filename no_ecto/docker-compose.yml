@@ -1,0 +1,25 @@
+version: "3.9"
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: ../docker/phx/Dockerfile
+      target: development
+      args: 
+        - WORKING=/app
+        - APP_ROOT=./sample
+    environment: 
+      - MIX_ENV=dev
+    volumes:
+      - ./sample:/app
+      - web_build:/app/_build
+      - web_deps:/app/deps
+    ports: 
+      - 4000:4000
+    tty: true
+    stdin_open: true
+
+volumes:
+  web_build:
+  web_deps:

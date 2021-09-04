@@ -1,0 +1,34 @@
+<section class="phx-hero">
+  <h2>New User</h2>
+
+  <%= form_for @conn, Routes.page_path(@conn, :new), [
+    as: :user,
+    csrf_token: get_csrf_token()
+  ], fn f -> %>
+    <%= text_input f, :name, value: @name, placeholder: "Name" %>
+    <%= text_input f, :email, value: @email, placeholder: "Email" %>
+    <%= submit "Register" %>
+  <% end %>
+
+</section>
+
+<section class="row">
+  <article class="column">
+    <h2>Users</h2>
+    <table>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+      </tr>
+
+      <%= for user <- @users do %>
+        <tr>
+          <td><%= user.name %><td>
+          <td><%= user.email %><td>
+        <tr>
+      <% end %>
+
+    </table>
+  </article>
+</section>
+
