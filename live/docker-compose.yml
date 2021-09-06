@@ -1,0 +1,28 @@
+version: "3.9"
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: ../docker/phx/Dockerfile
+      target: development.node
+      args: 
+        # define working and app_root directories on building phase
+        - WORKING=/app
+        - APP_ROOT=./sample
+    environment: 
+      - MIX_ENV=dev
+    volumes:
+      - ./sample:/app
+      - web_build:/app/_build
+      - web_deps:/app/deps
+      - web_node_modules:/app/assets/node_modules
+    ports: 
+      - 4000:4000
+    tty: true
+    stdin_open: true
+
+volumes:
+  web_build:
+  web_deps:
+  web_node_modules:

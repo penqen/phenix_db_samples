@@ -1,0 +1,40 @@
+<section class="phx-hero">
+  <h2>New User</h2>
+  <form phx-submit="register">
+    <input
+      type="text"
+      name="name"
+      value="<%= @name %>"
+      placeholder="Name"
+      autocomplete="off"
+    />
+    <input
+      type="text"
+      name="email"
+      value="<%= @email %>"
+      placeholder="Email"
+      autocomplete="off"
+    />
+    <button type="submit" phx-disable-with="Searching...">Register</button>
+  </form>
+</section>
+
+<section class="row">
+  <article class="column">
+    <h2>Users</h2>
+    <table>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+      </tr>
+
+      <%= for user <- @users do %>
+        <tr>
+          <td><%= user.name %><td>
+          <td><%= user.email %><td>
+        <tr>
+      <% end %>
+
+    </table>
+  </article>
+</section>
