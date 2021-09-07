@@ -1,0 +1,46 @@
+version: "3.9"
+
+services:
+  db:
+    image: mysql:latest
+    container_name: db
+    #restart: always
+    environment:
+      - MYSQL_RANDOM_ROOT_PASSWORD=yes
+      - MYSQL_DATABASE=sample_dev
+      - MYSQL_USER=phoenix
+      - MYSQL_PASSWORD=password
+      - TZ=Asia/Tokyo
+    ports:
+      - 3306:3306
+    volumes:
+      - mysql:/var/lib/mysql
+
+  web:
+    build:
+      context: .
+      dockerfile: ../docker/phx/Dockerfile
+      target: development.node
+      args: 
+        # define working and app_root directories on building phase
+        - WORKING=/app
+        - APP_ROOT=./sample
+    environment: 
+      - MIX_ENV=dev
+    volumes:
+      - ./sample:/app
+      - web_build:/app/_build
+      - web_deps:/app/deps
+      - web_node_modules:/app/assets/node_modules
+    ports: 
+      - 4000:4000
+    tty: true
+    stdin_open: true
+    depends_on: 
+      - db
+
+volumes:
+  web_build:
+  web_deps:
+  web_node_modules:
+  mysql:
